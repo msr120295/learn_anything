@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learn_flutter/movies/movies_cubit.dart';
+import 'package:learn_flutter/movies/movies_model.dart' as mm;
+import 'package:learn_flutter/movies/movies_model.dart';
 
 class MoviesPageScreen extends StatefulWidget {
   const MoviesPageScreen({super.key});
@@ -29,19 +31,23 @@ class _MoviesPageScreenState extends State<MoviesPageScreen> {
               child: Icon(Icons.close),
             );
           } else if (state is LoadedState) {
-            final movies = state.movies;
+            MoviesModel movies = state.movies;
+            List<Result>? results = movies.results;
+
+            // basic null
+            // ? ?? !
 
             return ListView.builder(
-              itemCount: movies.length,
-              itemBuilder: (context, index) => Card(
-                child: ListTile(
-                  title: Text(movies[index].title),
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(movies[index].urlImage),
-                  ),
-                ),
-              ),
-            );
+                itemCount: results?.length,
+                itemBuilder: (context, index) {
+                  String? responSatu = results?[index].title ?? "-";
+                  String? responDua =
+                      results?[index].popularity.toString() ?? "-";
+                  return Card(
+                    child: ListTile(
+                        title: Text(responSatu), leading: Text(responDua)),
+                  );
+                });
           } else {
             return Container();
           }

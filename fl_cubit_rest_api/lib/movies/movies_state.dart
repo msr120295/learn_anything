@@ -20,7 +20,7 @@ class LoadingState extends MoviesState {
 class LoadedState extends MoviesState {
   LoadedState(this.movies);
 
-  final List<MovieModel> movies;
+  MoviesModel movies;
 
   @override
   List<Object> get props => [movies];
